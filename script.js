@@ -14,7 +14,24 @@ toggle.addEventListener("click", () => {
 
     }
 })
+function increaseCount(selector) {
+    const element = $(selector);
+    const count = element.text();
+    const countNumber = parseInt(count, 10);
+    if (countNumber < 1000) {
+        const newCount = (countNumber + 1).toString();
+        element.text(newCount);
+    } else {
+        clearInterval(intervalId); // Dừng vòng lặp khi đạt 1000
+    }
+}
 
+// Gọi hàm tăng giá trị cho từng loại thẻ
+const intervalId = setInterval(function () {
+    increaseCount(".like-count");
+    increaseCount(".comment-count");
+    increaseCount(".share-count");
+}, 0.1); // Tăng giá trị mỗi 10 mili giây
 //Chống copy
 function killCopy(e){
     return false;
