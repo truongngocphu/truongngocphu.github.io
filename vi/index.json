@@ -1,0 +1,127 @@
+[
+{
+	"uri": "/vi/2-prerequiste/2.2/2.2.1/",
+	"title": " Cấu hình Security Groups",
+	"tags": [],
+	"description": "",
+	"content": "Thiết lập các quy tắc cho Security Group Cấu hình Security Group để mở các cổng truy cập cần thiết:\n22 (SSH) 80 (HTTP) 3306 (MySQL/Aurora) Chỉnh sửa Inbound Rules Nhấn vào tên Security Group chính\nChọn Edit inbound rules\nNhấn Add rule và cấu hình như sau:\nSSH\nGiao thức: TCP Cổng: 22 Nguồn: 0.0.0.0/0 HTTP\nGiao thức: TCP Cổng: 80 Nguồn: 0.0.0.0/0 MySQL/Aurora\nGiao thức: TCP Cổng: 3306 Nguồn: 0.0.0.0/0 Kết quả: Security Group đã được cấu hình để cho phép các kết nối SSH, HTTP và MySQL/Aurora.\n"
+},
+{
+	"uri": "/vi/2-prerequiste/2.1/",
+	"title": "Cấu hình Amazon VPC (Mạng Riêng Ảo)",
+	"tags": [],
+	"description": "",
+	"content": "Ở bước này, chúng ta tạo và cấu hình một Mạng Riêng Ảo (Virtual Private Cloud - VPC) để cô lập và quản lý hiệu quả các tài nguyên AWS.\nCác bước triển khai 1. Tạo VPC CIDR block: 10.0.0.0/16 2. Tạo 2 subnet: Subnet công khai (Public Subnet)\nCác instance EC2\nLoad Balancer\nSubnet riêng tư (Private Subnet)\nAurora RDS 3. Tạo Internet Gateway (IGW) Tạo Internet Gateway Gắn Internet Gateway vào VPC để cho phép truy cập Internet ra ngoài (dành cho subnet công khai) 4. Cấu hình bảng định tuyến (Route Tables) Bảng định tuyến công khai (Public Route Table)\nLiên kết với subnet công khai\nThêm tuyến đường tới Internet Gateway:\nDestination: 0.0.0.0/0\nTarget: Internet Gateway (my-vpc-igw)\nBảng định tuyến riêng tư (Private Route Table)\nLiên kết với subnet riêng tư\nKhông thêm tuyến đường ra Internet (chỉ giao tiếp nội bộ)\n"
+},
+{
+	"uri": "/vi/1-introduce/",
+	"title": "Giới thiệu",
+	"tags": [],
+	"description": "",
+	"content": "Mô hình ba lớp (Three-Layer Model) Mô hình ba lớp là một kiến trúc phần mềm phổ biến, trong đó ứng dụng được chia thành ba lớp chính, mỗi lớp đảm nhiệm một vai trò riêng biệt nhằm tăng tính phân tách, dễ bảo trì và mở rộng.\n1. Lớp trình bày (Presentation Layer) Đây là lớp giao diện người dùng, nơi người dùng tương tác với hệ thống.\nChức năng chính bao gồm:\nHiển thị dữ liệu cho người dùng Nhận đầu vào và gửi yêu cầu đến lớp Ứng dụng Ví dụ:\nGiao diện web, màn hình ứng dụng di động, hoặc phần mềm desktop.\n2. Lớp ứng dụng (Application Layer / Business Logic Layer) Là lớp xử lý logic nghiệp vụ của hệ thống.\nĐây là nơi:\nXử lý các lệnh từ lớp Trình bày Thực hiện tính toán, kiểm tra quy tắc nghiệp vụ Điều phối luồng dữ liệu giữa lớp Trình bày và lớp Dữ liệu 3. Lớp dữ liệu (Data Layer) Lớp này chịu trách nhiệm về lưu trữ và truy xuất dữ liệu.\nNhiệm vụ bao gồm:\nGiao tiếp với cơ sở dữ liệu hoặc hệ thống lưu trữ Thực hiện các thao tác lưu, cập nhật và truy vấn dữ liệu theo yêu cầu từ lớp Ứng dụng "
+},
+{
+	"uri": "/vi/",
+	"title": "Triển khai hệ thống website đặt vé xem phim - Sử dụng các dịch vụ của Amazon Web Service",
+	"tags": [],
+	"description": "",
+	"content": "Triển khai hệ thống website đặt vé xem phim - Sử dụng các dịch vụ của Amazon Web Service Tổng quan Ở bài lab này chúng tôi sẽ thực hiện triển khai hệ thống website bán vé xem phép bằng cách sử dụng các dịch vụ của AWS như: EC2, S3, Route 53, RDS,\u0026hellip;\nNội dung Giới thiệu Các bước triển khai Demo \u0026amp; thực hành Tóm tắt Dọn dẹp tài nguyên "
+},
+{
+	"uri": "/vi/2-prerequiste/2.2/2.2.2/",
+	"title": " Thiết lập Target Groups",
+	"tags": [],
+	"description": "",
+	"content": "Tạo Target Group Nhấn Create Target Groups\nTrong phần Basic configuration, chọn:\nTarget type: Instances Cấu hình thông tin:\nTarget Group Name: TargetGroupCinema Protocol : Port: HTTP : 80 (mặc định) VPC: Chọn VPC đã tạo trước đó Đăng ký Instance vào Target Group Nhấn Next để chuyển sang bước Register Target\nỞ phần Available Instances:\nChọn Instance ID muốn gán vào Target Group Nhấn Include as pending below Kiểm tra và hoàn tất Trong phần Review Target, kiểm tra lại Instance đã được thêm\nNhấn Create Target Group để hoàn tất\nKết quả: Target Group TargetGroupCinema đã được tạo thành công và sẵn sàng để gắn với Load Balancer.\n"
+},
+{
+	"uri": "/vi/2-prerequiste/",
+	"title": "Các bước chuẩn bị",
+	"tags": [],
+	"description": "",
+	"content": "Triển khai Website với Kiến trúc Ba Tầng Trên AWS Để triển khai một website hiện đại, chúng ta cần chuẩn bị kiến thức và tài nguyên liên quan đến các dịch vụ AWS theo kiến trúc ba tầng:\nTầng Giao Diện Người Dùng (Frontend Layer) Các dịch vụ liên quan:\nCloudFront – Mạng phân phối nội dung (CDN) giúp tăng tốc truy cập. AWS WAF – Tường lửa ứng dụng web để bảo mật giao diện người dùng. Elastic Load Balancer (ELB) – Cân bằng tải giữa các máy chủ frontend/backend. Tầng Ứng Dụng (Application Layer) Các dịch vụ hỗ trợ:\nAmazon EC2 – Máy chủ ảo để chạy backend của dự án. Amazon S3 – Lưu trữ tĩnh, ví dụ như ảnh, tài liệu, file cấu hình. Parameter Store – Lưu trữ biến môi trường, thông tin cấu hình an toàn. Amazon Route 53 – Dịch vụ DNS cho tên miền. IAM – Quản lý quyền truy cập và bảo mật hệ thống. Tầng Dữ Liệu (Database Layer) Amazon RDS (Aurora MySQL) – Cơ sở dữ liệu quan hệ, tự động mở rộng, hiệu suất cao. Các dịch vụ được sử dụng "
+},
+{
+	"uri": "/vi/2-prerequiste/2.2/",
+	"title": "Thiết lập EC2",
+	"tags": [],
+	"description": "",
+	"content": "Mục đích: Chạy mã backend PHP trên máy chủ.\nCác bước: Tạo một EC2 instance\nSử dụng AMI Amazon Linux 2023 hoặc Amazon Linux 2.\nGán vào Public Subnet\nCấu hình Security Group để mở các cổng:\n22 (SSH) 80 (HTTP) 3306 (MySQL/Aurora) Thiết lập môi trường:\nChạy các lệnh sau để cập nhật hệ thống và cài đặt PHP, Apache:\nbash\rsudo yum update -y\rsudo amazon-linux-extras enable php8.1\rsudo yum install -y php php-mysqlnd httpd git\rsudo systemctl enable httpd\rsudo systemctl start httpd Đẩy code lên từ máy chủ cục bộ lên server Từ máy chủ cục bộ, bạn cần đẩy backend của dự án lên dịch vụ Amazon EC2 để bắt đầu triển khai tầng ứng dụng.\nTiến hành giải nén Sau khi upload thành công, tiến hành giải nén trên server unzip \u0026#34;.....\u0026#34;.zip Di chuyển folder từ /home/ec2-user/\u0026hellip;. đến /var/www/html (Server Apache)\nsudo mv /home/ec2-user/.... /var/www/html/ Sau khi di chuyển thư mục, tiến hành kiểm tra bằng lệnh ls -l /var/www/html/...\n"
+},
+{
+	"uri": "/vi/2-prerequiste/2.3/",
+	"title": " Cài đặt Amazon Aurora &amp; RDS (MySQL Compatible)",
+	"tags": [],
+	"description": "",
+	"content": "Mục đích Lưu trữ dữ liệu quan hệ cho hệ thống như: người dùng, vé, phim, v.v.\nCác bước thực hiện 1. Cấu hình mạng Chọn Private Subnet trong VPC Public accessibility: Chọn No 2. Tạo Aurora DB Cluster Engine: Chọn MySQL\nEngine Version: MySQL 8.0.41\nTemplates: Free Tier\nAvailability: Single-AZ DB instance deployment (1 instance)\nCài đặt DB DB Instance Identifier: phimbd Credentials Settings: Master Username: admin Credentials management: Self managed Master Password: ........ Instance Type: db.t3.micro\nCấu hình Kết nối Compute Resource: Nếu đã có EC2, chọn Connect to an EC2 compute resource Network Type: IPv4 VPC: Chọn VPC đã tạo DB Subnet Group: Chọn các subnet liên quan Public Access: Yes (cho phép truy cập từ bên ngoài) Kết quả Cơ sở dữ liệu phimdb đã được tạo thành công.\nKết nối với MySQL Workbench 3. Tải \u0026amp; cấu hình Workbench Mở MySQL Workbench Import dữ liệu .sql từ local vào RDS Nhấn dấu + ở mục MySQL Connections Popup Setup New Connection sẽ hiện ra Nhập thông tin: Connection Name: Tùy ý Hostname: Dán Endpoint của RDS Username: admin Password: Chọn Store in vault... để nhập mật khẩu Sau khi tạo xong, một card kết nối sẽ xuất hiện\nNhấn vào card để kết nối\nGiao diện chính của Workbench\nTạo và import Database Tạo DB mới tên: phimdb\nViết lệnh tạo DB, chạy lệnh bằng biểu tượng ⚡ hoặc nhấn F5\nNhấn refresh bên SCHEMAS để hiển thị DB mới\nTrên thanh công cụ chọn:\nServer → Data Import\nImport Options: Import from Self-Contained File Chọn file .sql Default Target Schema: phimdb Nhấn Start Import Sau khi import xong, nhấn refresh tại SCHEMAS Kiểm tra xem các bảng đã hiện đầy đủ chưa Kết luận Sau khi hoàn tất các bước trên, hệ thống đã sẵn sàng với một cơ sở dữ liệu quan hệ mạnh mẽ, bảo mật và hiệu quả để lưu trữ dữ liệu liên quan đến người dùng, vé, phim,\u0026hellip;\n"
+},
+{
+	"uri": "/vi/2-prerequiste/2.2/2.2.3/",
+	"title": " Thiết lập Load Balancers (ELB)",
+	"tags": [],
+	"description": "",
+	"content": "Tạo Application Load Balancer Trong EC2 Dashboard, truy cập Load Balancers\nNhấn Create Load Balancer\nTrong phần Compare and select load balancer types, chọn Application Load Balancer\nNhấn Create\nCấu hình cơ bản Trong màn hình Create Application Load Balancer:\nLoad balancer name: Nhập tên ELB muốn tạo Scheme: Chọn Internet-facing Cấu hình mạng (Network Mapping) Ở phần Network Mapping:\nChọn VPC đã tạo từ trước Chọn các Subnet cần sử dụng Security Groups \u0026amp; Routing Trong phần Security Groups:\nDùng nhóm mặc định default (hoặc nhóm bạn đã cấu hình) Trong phần Listeners and Routing:\nProtocol:Port: HTTP:80 Default action: Chọn Target Group đã tạo trước đó Nhấn Create Load Balancer để hoàn tất\nKết quả: Application Load Balancer đã được tạo thành công và kết nối với Target Group, sẵn sàng định tuyến lưu lượng HTTP.\n"
+},
+{
+	"uri": "/vi/3/",
+	"title": "Demo &amp; Thực hiện",
+	"tags": [],
+	"description": "",
+	"content": "Kiểm Tra Chức Năng Trang Web Sau Khi Triển Khai Sau khi hoàn tất cấu hình và triển khai các dịch vụ trên AWS (VPC, EC2, Aurora, ELB, Route 53, WAF, CloudFront, v.v.), tiến hành kiểm tra toàn bộ chức năng của hệ thống để đảm bảo hoạt động ổn định và đúng yêu cầu.\nCác Bước Kiểm Tra: 1. Truy cập giao diện chính Mở trình duyệt và truy cập:\nhttp://awsworkshopcinema.com/\nKiểm tra:\nGiao diện tải đúng và nhanh. Không lỗi file CSS/JS, hình ảnh Layout hiển thị chính xác trên desktop và mobile. Tự động chuyển hướng từ HTTP sang HTTPS (nếu cấu hình CloudFront đúng). 2. Kiểm tra kết nối cơ sở dữ liệu Truy cập các trang cần dữ liệu từ DB như:\nDanh sách phim Trang đặt vé Nếu gặp lỗi như \u0026quot;Database connection failed\u0026quot;, kiểm tra:\nSecurity Group Aurora có cho phép EC2 kết nối qua port 3306. Endpoint của Aurora đã được cấu hình đúng trong mã PHP chưa? Tham số từ AWS Parameter Store có được lấy đúng không? (dùng var_dump() để kiểm tra biến $host…) 3. Kiểm tra các tính năng chính của ứng dụng Đảm bảo các tính năng sau hoạt động bình thường: Xem danh sách phim Xem chi tiết phim Chọn suất chiếu và ghế Đăng nhập / Đăng ký người dùng Đặt vé (tạo đơn hàng, lưu vào DB) Xem lại vé đã đặt Ghi chú: Ghi nhận mọi lỗi phát sinh trong quá trình kiểm tra để tiến hành khắc phục sớm. Nên kiểm tra trên nhiều trình duyệt và thiết bị khác nhau để đảm bảo tính tương thích.\n"
+},
+{
+	"uri": "/vi/2-prerequiste/2.4/",
+	"title": " Cấu hình Amazon Route 53",
+	"tags": [],
+	"description": "",
+	"content": "Mục đích Kết nối tên miền tùy chỉnh với hệ thống backend thông qua Load Balancer.\nCác bước thực hiện 1. Mua domain Sử dụng một tên miền đã mua, ví dụ:\nhttps://awsworkshopcinema.com/\n2. Tạo Hosted Zone Tạo một Public Hosted Zone tương ứng với tên miền.\n3. Tạo bản ghi DNS (Record) Thêm bản ghi trỏ đến Load Balancer:\nLoại bản ghi: A (Alias) Alias target: Chọn DNS của Load Balancer từ danh sách 4. Kiểm tra domain trỏ về đúng địa chỉ Sử dụng lệnh sau trên terminal:\ndig +short awsworskhopcinema.com Kết quả: Tên miền awsworkshopcinema.com sẽ được trỏ đúng về hệ thống backend thông qua Application Load Balancer.\n"
+},
+{
+	"uri": "/vi/4/",
+	"title": "Summary",
+	"tags": [],
+	"description": "",
+	"content": "Lợi Ích Của Kiến Trúc 3 Lớp Trong Triển Khai Web Hiện Đại Kiến trúc 3 lớp (Three-Tier Architecture) là mô hình phổ biến trong phát triển web hiện đại, được chia thành:\nPresentation Layer – giao diện người dùng (frontend) Application Layer – xử lý nghiệp vụ (backend) Data Layer – quản lý và lưu trữ dữ liệu (CSDL) Lợi Ích Chính 1. Phân tách rõ ràng chức năng Mỗi lớp đảm nhiệm một vai trò riêng biệt → dễ bảo trì, nâng cấp hoặc thay đổi độc lập. 2. Tăng cường bảo mật Dữ liệu và logic xử lý được cô lập khỏi người dùng cuối. Có thể giới hạn truy cập giữa các lớp qua Security Groups hoặc firewalls (VD: chỉ EC2 mới kết nối được đến RDS). 3. Khả năng mở rộng (Scalability) Có thể mở rộng từng lớp riêng biệt tùy theo tải (VD: scale EC2 khi backend nặng, hoặc scale Aurora khi truy vấn DB tăng cao). 4. Dễ dàng triển khai CI/CD Từng lớp có thể được quản lý riêng qua pipeline, tự động build/test/deploy. 5. Tăng tính ổn định và khắc phục sự cố nhanh hơn Khi có lỗi ở một lớp, có thể cô lập và xử lý mà không ảnh hưởng toàn bộ hệ thống. So Sánh Với Serverless / Microservices Tiêu chí 3-Layer Architecture Serverless / Microservices Độ phức tạp ban đầu Trung bình, dễ triển khai ban đầu Cao, cần phân tích dịch vụ kỹ lưỡng Chi phí vận hành Tính theo giờ / tài nguyên chạy liên tục Pay-per-use, tối ưu cho tải không đều Khả năng mở rộng Theo từng lớp Rất linh hoạt, auto scale từng service nhỏ DevOps / CI/CD Dễ tích hợp theo tầng Mỗi service cần pipeline riêng Bảo trì / Debug Tập trung, đơn giản hơn Khó theo dõi toàn hệ thống khi lỗi phát sinh Use-case phù hợp Ứng dụng monolith vừa và lớn Hệ thống phức tạp, real-time, biến động cao Kết Luận Kiến trúc 3 lớp phù hợp cho các hệ thống web vừa đến lớn, dễ phát triển, dễ mở rộng, dễ quản lý. Serverless / Microservices phù hợp khi cần mở rộng linh hoạt, có đội ngũ DevOps mạnh, và hệ thống cần phân mảnh cao theo nghiệp vụ. Với người mới hoặc các dự án workshop như \u0026ldquo;Bán Vé Xem Phim\u0026rdquo;, kiến trúc 3 lớp là lựa chọn lý tưởng vì cân bằng được giữa đơn giản, hiệu quả và mở rộng.\n"
+},
+{
+	"uri": "/vi/2-prerequiste/2.5/",
+	"title": " Kích hoạt HTTPS (SSL/TLS) cho Domain",
+	"tags": [],
+	"description": "",
+	"content": "Tầm quan trọng của HTTPS HTTPS bảo vệ thông tin truyền giữa trình duyệt người dùng và máy chủ (web server) bằng cách mã hóa dữ liệu, đảm bảo an toàn khi truy cập website.\nChứng chỉ SSL từ AWS Certificate Manager (ACM) Giúp mã hóa dữ liệu, tăng cường bảo mật cho website. Bắt buộc sử dụng nếu bạn triển khai dịch vụ qua CloudFront, Elastic Load Balancer (ELB), hoặc API Gateway. Lợi ích của HTTPS Tăng uy tín và độ tin cậy:\nTrình duyệt sẽ hiển thị biểu tượng ổ khóa 🔒 khi website có chứng chỉ hợp lệ, giúp khách hàng cảm thấy an tâm hơn. Xây dựng niềm tin khách hàng:\nĐặc biệt quan trọng với các trang thương mại điện tử hoặc các trang có biểu mẫu đăng nhập. Các bước đăng ký chứng chỉ SSL trên AWS ACM 1. Truy cập AWS Certificate Manager (ACM) Điều hướng đến dịch vụ Certificate Manager từ Console của AWS. Chọn Request a certificate. 2. Chọn loại chứng chỉ Chọn Request a public certificate. Bấm Next. 3. Nhập tên miền Nhập domain đầy đủ (ví dụ: awsworkshopcinema.com) hoặc cả domain phụ (www.awsworskhopcinema.com nếu cần). Bấm Next. 4. Xác minh quyền sở hữu tên miền Chọn một trong hai phương pháp:\nDNS Validation (khuyến nghị):\nACM sẽ cung cấp một bản ghi CNAME để bạn thêm vào DNS (thường là trong Route 53). Email Validation:\nAWS sẽ gửi email xác minh đến các địa chỉ liên kết với domain. Với Route 53, bạn có thể chọn tự động thêm bản ghi DNS nếu domain nằm trong Hosted Zone của AWS.\n5. Xác nhận và chờ phê duyệt Sau khi xác minh thành công, trạng thái chứng chỉ sẽ chuyển sang Issued. Bạn có thể sử dụng chứng chỉ này trong các dịch vụ như ELB, CloudFront, hoặc API Gateway. Tích hợp ACM với các dịch vụ AWS Chứng chỉ ACM có thể tích hợp trực tiếp và dễ dàng với:\nElastic Load Balancer (ELB) Amazon CloudFront (CDN) API Gateway AWS Amplify Bạn không cần upload thủ công file chứng chỉ như khi dùng SSL từ bên thứ ba.\nTóm lại:\nĐăng ký chứng chỉ ACM là bước bắt buộc khi triển khai HTTPS trên AWS. Đây là giải pháp miễn phí, bảo mật, và dễ quản lý cho hệ thống của bạn.\n"
+},
+{
+	"uri": "/vi/6-cleanup/",
+	"title": "Dọn dẹp tài nguyên",
+	"tags": [],
+	"description": "",
+	"content": "Chúng ta sẽ tiến hành các bước sau để xóa các tài nguyên chúng ta đã tạo trong bài thực hành này.\nXóa EC2 instance Truy cập giao diện quản trị dịch vụ EC2 Click Instances. Click chọn cả 2 instance Public Linux Instance và Private Windows Instance. Click Instance state. Click Terminate instance, sau đó click Terminate để xác nhận. Truy cập giao diện quản trị dịch vụ IAM Click Roles. Tại ô tìm kiếm , điền SSM. Click chọn SSM-Role. Click Delete, sau đó điền tên role SSM-Role và click Delete để xóa role. Click Users. Click chọn user Portfwd. Click Delete, sau đó điền tên user Portfwd và click Delete để xóa user. Xóa S3 bucket Truy cập giao diện quản trị dịch vụ System Manager - Session Manager. Click tab Preferences. Click Edit. Kéo chuột xuống dưới. Tại mục S3 logging. Bỏ chọn Enable để tắt tính năng logging. Kéo chuột xuống dưới. Click Save. Truy cập giao diện quản trị dịch vụ S3 Click chọn S3 bucket chúng ta đã tạo cho bài thực hành. ( Ví dụ : lab-fcj-bucket-0001 ) Click Empty. Điền permanently delete, sau đó click Empty để tiến hành xóa object trong bucket. Click Exit. Sau khi xóa hết object trong bucket, click Delete Điền tên S3 bucket, sau đó click Delete bucket để tiến hành xóa S3 bucket. Xóa các VPC Endpoint Truy cập vào giao diện quản trị dịch vụ VPC Click Endpoints. Chọn 4 endpoints chúng ta đã tạo cho bài thực hành bao gồm SSM, SSMMESSAGES, EC2MESSAGES, S3GW. Click Actions. Click Delete VPC endpoints. Tại ô confirm , điền delete. Click Delete để tiến hành xóa các endpoints. Click biểu tượng refresh, kiểm tra tất cả các endpoints đã bị xóa trước khi làm bước tiếp theo. Xóa VPC Truy cập vào giao diện quản trị dịch vụ VPC Click Your VPCs. Click chọn Lab VPC. Click Actions. Click Delete VPC. Tại ô confirm, điền delete để xác nhận, click Delete để thực hiện xóa Lab VPC và các tài nguyên liên quan. "
+},
+{
+	"uri": "/vi/2-prerequiste/2.6/",
+	"title": " Cấu hình AWS WAF (Web Application Firewall)",
+	"tags": [],
+	"description": "",
+	"content": "Mục tiêu Nâng cao bảo mật bằng cách giảm thiểu các mối đe dọa ở tầng ứng dụng (Layer 7) như SQL Injection, Cross-Site Scripting (XSS), tấn công bot tự động, và các cuộc tấn công DDoS có lưu lượng nhỏ.\nCác bước thực hiện 1. Truy cập AWS WAF → Web ACLs → Create Web ACL Bắt đầu bằng cách tạo một Web ACL (Danh sách kiểm soát truy cập) mới trong bảng điều khiển AWS WAF.\n2. Liên kết Web ACL với Application Load Balancer Trong quá trình thiết lập, gán Web ACL vào Load Balancer ứng dụng (ALB) đang chịu trách nhiệm chuyển tiếp lưu lượng truy cập web.\n3. Định nghĩa các quy tắc bảo mật Nhóm quy tắc được quản lý (Managed Rule Groups):\nThêm AWSManagedRulesCommonRuleSet để áp dụng bộ quy tắc bảo vệ chuẩn được AWS cấu hình sẵn.\nQuy tắc tùy chỉnh (tuỳ chọn):\nTạo thêm các quy tắc dựa trên:\nĐịa chỉ IP Đường dẫn URI của yêu cầu Phương thức HTTP Header User-Agent Giới hạn tần suất truy cập (rate limits) 4. Giám sát nhật ký WAF Sử dụng chức năng ghi nhật ký (logging) của AWS WAF để theo dõi và phân tích các yêu cầu bị chặn, từ đó nâng cao hiệu quả và điều chỉnh quy tắc liên tục.\nKết quả Sau khi cấu hình, hệ thống sẽ trở nên kiên cố hơn trước các cuộc tấn công phổ biến trên web, đồng thời cải thiện mức độ bảo mật và tính sẵn sàng của dịch vụ.\n"
+},
+{
+	"uri": "/vi/2-prerequiste/2.7/",
+	"title": " Cấu hình CloudFront",
+	"tags": [],
+	"description": "",
+	"content": "Mục đích:\nTăng tốc độ tải trang qua CDN, hỗ trợ HTTPS và caching.\nCác bước thực hiện: Tạo CloudFront Distribution:\nOrigin: DNS của Load Balancer Default root object: BanVeXemPhim/index.php Chính sách giao thức người xem (Viewer protocol policy): Chuyển hướng HTTP sang HTTPS Trỏ domain về CloudFront qua Route 53 nếu muốn hỗ trợ HTTPS.\nTùy chọn: Gắn chứng chỉ SSL (ACM certificate)\nSau khi cấu hình, ứng dụng của bạn sẽ được tăng tốc độ phân phối nội dung, bảo mật kết nối HTTPS và tối ưu caching.\n"
+},
+{
+	"uri": "/vi/categories/",
+	"title": "Categories",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "/vi/tags/",
+	"title": "Tags",
+	"tags": [],
+	"description": "",
+	"content": ""
+}]

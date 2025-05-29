@@ -1,0 +1,127 @@
+[
+{
+	"uri": "/2-prerequiste/2.2/2.2.1/",
+	"title": " Configuring Security Groups",
+	"tags": [],
+	"description": "",
+	"content": "Set Up Security Group Rules Configure your Security Group to allow access through the following ports:\n22 (SSH) 80 (HTTP) 3306 (MySQL/Aurora) Edit Inbound Rules Click on the Security Group name\nSelect Edit inbound rules\nClick Add rule and configure the following:\nSSH\nProtocol: TCP Port Range: 22 Source: 0.0.0.0/0 HTTP\nProtocol: TCP Port Range: 80 Source: 0.0.0.0/0 MySQL/Aurora\nProtocol: TCP Port Range: 3306 Source: 0.0.0.0/0 Result: Your Security Group is now configured to allow traffic for SSH, HTTP, and MySQL/Aurora connections.\n"
+},
+{
+	"uri": "/2-prerequiste/2.1/",
+	"title": "Configuring Amazon VPC (Virtual Private Cloud)",
+	"tags": [],
+	"description": "",
+	"content": "At this stage, we create and configure a Virtual Private Cloud (VPC) to isolate and effectively manage AWS resources.\nDeployment Steps 1. Create a VPC CIDR block: 10.0.0.0/16 2. Create 2 subnets: Public Subnet\nEC2 instances\nLoad Balancer\nPrivate Subnet\nAurora RDS 3. Create an Internet Gateway (IGW) Create an Internet Gateway Attach it to the VPC to allow outbound Internet access (for public subnet) 4. Configure Route Tables Public Route Table\nAssociate it with the public subnet\nAdd route to Internet Gateway:\nDestination: 0.0.0.0/0\nTarget: Internet Gateway (my-vpc-igw)\nPrivate Route Table\nAssociate it with the private subnet\nDo not add internet route (internal communication only)\n"
+},
+{
+	"uri": "/",
+	"title": "Deploying a Movie Ticket Booking Website System – Using Amazon Web Services (AWS)",
+	"tags": [],
+	"description": "",
+	"content": "Deploying a Movie Ticket Booking Website System – Using Amazon Web Services (AWS) Overview In this lab, we will deploy a movie ticket booking website system using AWS services such as EC2, S3, Route 53, RDS, and more.\nContents Introduction Deployment Steps Demo \u0026amp; Hands-On Practice Summary Resource Cleanup "
+},
+{
+	"uri": "/1-introduce/",
+	"title": "Introduction",
+	"tags": [],
+	"description": "",
+	"content": "Introduction The Three-Layer Model is a widely used software architecture pattern that organizes an application into three distinct layers, each with specific responsibilities:\n1. Presentation Layer This is the user interface layer where end users interact with the system.\nIts primary responsibilities include:\nDisplaying data to the user Sending user inputs to the Application layer Examples:\nWeb pages, mobile app screens, desktop GUI applications\n2. Application Layer (Business Logic Layer) This layer contains the core logic and business rules of the application.\nIt performs tasks such as:\nProcessing user commands from the Presentation layer Executing business logic Controlling the flow of data between the Presentation and Data layers 3. Data Layer The Data Layer is responsible for data storage and retrieval.\nIt communicates directly with databases or other persistent storage systems to:\nSave data Update records Retrieve information as requested by the Application layer "
+},
+{
+	"uri": "/2-prerequiste/2.2/2.2.2/",
+	"title": " Setting Up Target Groups",
+	"tags": [],
+	"description": "",
+	"content": "Create a Target Group Click Create Target Groups\nUnder Basic configuration, select:\nTarget type: Instances Fill in the following settings:\nTarget Group Name: TargetGroupCinema Protocol : Port: HTTP : 80 (default) VPC: Select the VPC you created earlier Register an Instance to the Target Group Click Next to proceed to the Register Target step\nIn the Available Instances section:\nSelect the Instance ID you want to register Click Include as pending below Review and Finish In the Review Target section, ensure the correct Instance ID appears\nClick Create Target Group to complete the setup\nResult: The TargetGroupCinema has been successfully created and is now ready to be attached to a Load Balancer.\n"
+},
+{
+	"uri": "/2-prerequiste/",
+	"title": "Deployment Steps ",
+	"tags": [],
+	"description": "",
+	"content": "Deploying a Website with a Three-Tier Architecture on AWS To deploy a modern website, we need to prepare the knowledge and resources related to AWS services following a three-tier architecture:\nPresentation Layer (Frontend Layer) Relevant services:\nCloudFront – A Content Delivery Network (CDN) that accelerates access. AWS WAF – Web Application Firewall to secure the user interface. Elastic Load Balancer (ELB) – Distributes traffic across frontend/backend servers. Application Layer Supporting services:\nAmazon EC2 – Virtual servers to host the project\u0026rsquo;s backend. Amazon S3 – Static file storage such as images, documents, configuration files. Parameter Store – Secure storage for environment variables and configuration settings. Amazon Route 53 – DNS service for domain name management. IAM – Access control and security management. Data Layer Amazon RDS (Aurora MySQL) – A scalable, high-performance relational database service. Services used "
+},
+{
+	"uri": "/2-prerequiste/2.2/",
+	"title": "EC2 Setup",
+	"tags": [],
+	"description": "",
+	"content": "Purpose: Run PHP backend code on the server.\nSteps: Create an EC2 instance\nUse Amazon Linux 2023 or Amazon Linux 2 AMI.\nAssign to Public Subnet\nConfigure the Security Group to open ports:\n22 (SSH) 80 (HTTP) 3306 (MySQL/Aurora) Set up the environment:\nRun the following commands to update the system and install PHP and Apache:\nsudo yum update -y sudo amazon-linux-extras enable php8.1 sudo yum install -y php php-mysqlnd httpd git sudo systemctl enable httpd sudo systemctl start httpd "
+},
+{
+	"uri": "/2-prerequiste/2.3/",
+	"title": " Set Up Amazon Aurora (MySQL Compatible)",
+	"tags": [],
+	"description": "",
+	"content": "Purpose:\nStore relational data for the system (users, tickets, movies, \u0026hellip;)\nSteps: Create Aurora DB Cluster Select engine: MySQL Network Configuration\nChoose Private Subnet in VPC Public accessibility: Set to No Security Setup\nAssign a Security Group that only allows connections from EC2 (port 3306) Initialize the Database\nCreate a database named: phim-db Import data from the .sql file Connect from Application\nIn PHP, use the Aurora host endpoint to connect ✅ Once completed, the system will have a powerful, secure, and efficient relational database to handle data related to users, tickets, and movies.\n"
+},
+{
+	"uri": "/2-prerequiste/2.2/2.2.3/",
+	"title": " Setting Up Load Balancers (ELB)",
+	"tags": [],
+	"description": "",
+	"content": "Create an Application Load Balancer In the EC2 Dashboard, go to Load Balancers\nClick Create Load Balancer\nIn the Compare and select load balancer types section, choose Application Load Balancer\nClick Create\nBasic Configuration In the Create Application Load Balancer screen:\nLoad balancer name: Enter a name for the ELB Scheme: Select Internet-facing Network Mapping Under Network Mapping:\nSelect the previously created VPC Choose the appropriate Subnets to use Security Groups \u0026amp; Routing In the Security Groups section:\nUse the default security group (or another if you\u0026rsquo;ve set one up) In the Listeners and Routing section:\nProtocol:Port: HTTP:80 Default action: Choose the Target Group you created earlier Click Create Load Balancer to finish\nResult: Your Application Load Balancer is now created and linked to your target group, ready to route HTTP traffic.\n"
+},
+{
+	"uri": "/3/",
+	"title": "Demo &amp; practice",
+	"tags": [],
+	"description": "",
+	"content": "Post-Deployment Web Application Functionality Testing After completing the configuration and deployment of AWS services (VPC, EC2, Aurora, ELB, Route 53, WAF, CloudFront, etc.), proceed to thoroughly test the system’s functionality to ensure it operates correctly and reliably.\nTesting Steps: 1. Access the Main Interface Open a web browser and visit:\nhttp://awsworkshopcinema.com/\nVerify:\nThe website loads quickly and correctly.\nNo broken CSS/JS files or missing images.\nThe layout displays properly on both desktop and mobile.\nAutomatic redirect from HTTP to HTTPS (if CloudFront is configured correctly).\n2. Check Database Connection Visit pages that require database access, such as:\nMovie list Booking page If you encounter errors like \u0026quot;Database connection failed\u0026quot;, check:\nAurora’s Security Group: ensure it allows EC2 access on port 3306. Whether the Aurora endpoint is correctly configured in the PHP code. If parameters from AWS Parameter Store are being fetched correctly (use var_dump($host) to check). 3. Test Core Application Features Ensure the following features are functioning properly: View list of movies View movie details Select showtime and seats User login / registration Book tickets (create order and save to DB) View booking history Note: Record any errors during testing for timely resolution. It’s recommended to test across different browsers and devices to ensure compatibility.\n"
+},
+{
+	"uri": "/2-prerequiste/2.4/",
+	"title": " Configure Amazon Route 53",
+	"tags": [],
+	"description": "",
+	"content": "Purpose Connect a custom domain to the backend system via a Load Balancer.\nSteps to Follow 1. Purchase a Domain Use a purchased domain, for example:\nhttps://awsworkshopcinema.com/\n2. Create a Hosted Zone Create a Public Hosted Zone that corresponds to your domain.\n3. Create a DNS Record Add a record pointing to the Load Balancer:\nRecord type: A (Alias) Alias target: Select your Load Balancer\u0026rsquo;s DNS from the list 4. Verify the Domain Points to the Correct Address Run the following command in your terminal:\ndig +short awsworskhopcinema.com "
+},
+{
+	"uri": "/4/",
+	"title": "Summary",
+	"tags": [],
+	"description": "",
+	"content": "Benefits of the Three-Tier Architecture in Modern Web Deployment The Three-Tier Architecture is a common model in modern web development, divided into:\nPresentation Layer – user interface (frontend) Application Layer – business logic (backend) Data Layer – data management and storage (database) Key Benefits 1. Clear separation of concerns Each layer has a distinct role → easier to maintain, upgrade, or modify independently. 2. Enhanced security Data and processing logic are isolated from end users. Access between layers can be restricted via Security Groups or firewalls (e.g., only EC2 can connect to RDS). 3. Scalability Each layer can be scaled independently according to load (e.g., scale EC2 when backend load is high, or scale Aurora when DB queries increase). 4. Easier CI/CD deployment Each layer can be managed separately with pipelines for automated build/test/deploy. 5. Increased stability and faster troubleshooting Issues in one layer can be isolated and resolved without affecting the whole system. Comparison with Serverless / Microservices Criteria 3-Layer Architecture Serverless / Microservices Initial complexity Moderate, easier to deploy initially High, requires detailed service analysis Operational cost Charged hourly / continuous resource usage Pay-per-use, optimized for variable loads Scalability Layer-based scaling Highly flexible, auto-scale individual services DevOps / CI/CD Easier to integrate per layer Each service requires its own pipeline Maintenance / Debugging More centralized and simpler Harder to track system-wide issues Suitable use cases Medium to large monolithic apps Complex, real-time, highly dynamic systems Conclusion The Three-Tier Architecture suits medium to large web systems, offering easy development, scaling, and management. Serverless / Microservices are suitable for flexible scaling needs, strong DevOps teams, and highly fragmented business logic. For beginners or workshop projects like \u0026ldquo;Ticket Booking Cinema,\u0026rdquo; the three-tier architecture is an ideal choice balancing simplicity, efficiency, and scalability.\n"
+},
+{
+	"uri": "/2-prerequiste/2.5/",
+	"title": " Configure AWS WAF (Web Application Firewall)",
+	"tags": [],
+	"description": "",
+	"content": "Objective Enhance security by mitigating application layer (Layer 7) threats such as SQL Injection, Cross-Site Scripting (XSS), automated bot attacks, and low-volume DDoS attacks.\nImplementation Steps 1. Navigate to AWS WAF → Web ACLs → Create Web ACL Begin by creating a new Web ACL (Access Control List) in the AWS WAF console.\n2. Associate the Web ACL with the Application Load Balancer During setup, link the Web ACL to the appropriate ALB that routes your web traffic.\n3. Define Security Rules Managed Rule Groups:\nAdd AWSManagedRulesCommonRuleSet to apply a comprehensive set of pre-configured protections.\nCustom Rules (optional):\nDefine additional rules based on:\nIP addresses Request URI paths HTTP methods User-Agent headers Rate limits 4. Monitor WAF Logs Utilize AWS WAF logging to monitor and analyze blocked requests for better visibility and continuous improvement of your ruleset.\nResult Once configured, the system will be significantly more resilient against common web-based attacks, improving both security posture and service availability.\n"
+},
+{
+	"uri": "/6-cleanup/",
+	"title": "Clean up resources",
+	"tags": [],
+	"description": "",
+	"content": "We will take the following steps to delete the resources we created in this exercise.\nDelete EC2 instance Go to EC2 service management console\nClick Instances. Select both Public Linux Instance and Private Windows Instance instances. Click Instance state. Click Terminate instance, then click Terminate to confirm. Go to IAM service management console\nClick Roles. In the search box, enter SSM. Click to select SSM-Role. Click Delete, then enter the role name SSM-Role and click Delete to delete the role. Click Users. Click on user Portfwd. Click Delete, then enter the user name Portfwd and click Delete to delete the user. Delete S3 bucket Access System Manager - Session Manager service management console.\nClick the Preferences tab. Click Edit. Scroll down. In the section S3 logging. Uncheck Enable to disable logging. Scroll down. Click Save. Go to S3 service management console\nClick on the S3 bucket we created for this lab. (Example: lab-fcj-bucket-0001 ) Click Empty. Enter permanently delete, then click Empty to proceed to delete the object in the bucket. Click Exit. After deleting all objects in the bucket, click Delete\nEnter the name of the S3 bucket, then click Delete bucket to proceed with deleting the S3 bucket. Delete VPC Endpoints Go to VPC service management console Click Endpoints. Select the 4 endpoints we created for the lab including SSM, SSMMESSAGES, EC2MESSAGES, S3GW. Click Actions. Click Delete VPC endpoints. In the confirm box, enter delete.\nClick Delete to proceed with deleting endpoints. Click the refresh icon, check that all endpoints have been deleted before proceeding to the next step.\nDelete VPC Go to VPC service management console\nClick Your VPCs. Click on Lab VPC. Click Actions. Click Delete VPC. In the confirm box, enter delete to confirm, click Delete to delete Lab VPC and related resources.\n"
+},
+{
+	"uri": "/2-prerequiste/2.6/",
+	"title": " Configure AWS WAF (Web Application Firewall)",
+	"tags": [],
+	"description": "",
+	"content": "Objective Enhance security by mitigating application layer (Layer 7) threats such as SQL Injection, Cross-Site Scripting (XSS), automated bot attacks, and low-volume DDoS attacks.\nImplementation Steps 1. Navigate to AWS WAF → Web ACLs → Create Web ACL Begin by creating a new Web ACL (Access Control List) in the AWS WAF console.\n2. Associate the Web ACL with the Application Load Balancer During setup, link the Web ACL to the appropriate ALB that routes your web traffic.\n3. Define Security Rules Managed Rule Groups:\nAdd AWSManagedRulesCommonRuleSet to apply a comprehensive set of pre-configured protections.\nCustom Rules (optional):\nDefine additional rules based on:\nIP addresses Request URI paths HTTP methods User-Agent headers Rate limits 4. Monitor WAF Logs Utilize AWS WAF logging to monitor and analyze blocked requests for better visibility and continuous improvement of your ruleset.\nResult Once configured, the system will be significantly more resilient against common web-based attacks, improving both security posture and service availability.\n"
+},
+{
+	"uri": "/2-prerequiste/2.7/",
+	"title": " CloudFront Configuration",
+	"tags": [],
+	"description": "",
+	"content": "Purpose:\nImprove loading speed via CDN, support HTTPS, and enable caching.\nSteps: Create a CloudFront Distribution:\nOrigin: Load Balancer DNS Default root object: BanVeXemPhim/index.php Viewer protocol policy: Redirect HTTP to HTTPS Point your domain to CloudFront via Route 53 if you want HTTPS support.\nOptional: Attach SSL certificate (ACM certificate)\nAfter setup, your application will benefit from faster content delivery, secure HTTPS connections, and efficient caching.\n"
+},
+{
+	"uri": "/categories/",
+	"title": "Categories",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "/tags/",
+	"title": "Tags",
+	"tags": [],
+	"description": "",
+	"content": ""
+}]
